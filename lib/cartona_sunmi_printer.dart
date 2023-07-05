@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 
+const commandHasPrinter = "HAS_PRINTER";
 const commandInitPrinter = "INIT_PRINTER";
 const commandPrinterVersion = "PRINTER_VERSION";
 const commandPrintText = "PRINT_TEXT";
@@ -42,6 +43,11 @@ class CartonaSunmiPrinter {
   /// Used to initialize the printer, must only be called once at the startup
   static Future<bool> initializePrinter() async {
     return await _channel.invokeMethod(commandInitPrinter);
+  }
+
+  /// Used to initialize the printer, must only be called once at the startup
+  static Future<bool> hasPrinter() async {
+    return await _channel.invokeMethod(commandHasPrinter);
   }
 
   /// Returns the printer version on the devices
