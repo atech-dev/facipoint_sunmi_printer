@@ -11,6 +11,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import org.json.JSONArray
 
+const val hasPrinter = "HAS_PRINTER"
 const val initPrinter = "INIT_PRINTER"
 const val printerVersion = "PRINTER_VERSION"
 const val printText = "PRINT_TEXT"
@@ -63,6 +64,24 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                 printer.initPrinter()
                 result.success(true)
             }
+
+            hasPrinter -> {
+                var hasPrinter = false
+                if (printer.sunmiPrinter == SunmiPrintHelper.FoundSunmiPrinter) {
+                    hasPrinter = true
+                } else if (printer.sunmiPrinter == SunmiPrintHelper.CheckSunmiPrinter ||
+                    printer.sunmiPrinter == SunmiPrintHelper.LostSunmiPrinter) {
+
+                    printer.initSunmiPrinterService(context)
+                    if (printer.sunmiPrinter == SunmiPrintHelper.FoundSunmiPrinter) {
+                        hasPrinter = true
+                    }
+
+                }
+                println("[CartonaSunmiPrinter] Has printer $hasPrinter")
+                result.success(hasPrinter)
+            }
+
             printText -> {
                 call.argument<String?>("text")?.let {
                     println("[CartonaSunmiPrinter] Printing text: $it")
@@ -70,6 +89,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             setBold -> {
                 call.argument<Boolean?>("enable")?.let {
                     println("[CartonaSunmiPrinter] Set bold: $it")
@@ -77,6 +97,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             setUnderline -> {
                 call.argument<Boolean?>("enable")?.let {
                     println("[CartonaSunmiPrinter] Set underline: $it")
@@ -84,6 +105,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             setFontSize -> {
                 call.argument<Double?>("fontSize")?.let {
                     println("[CartonaSunmiPrinter] Set font size: $it")
@@ -91,20 +113,24 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             printerVersion -> {
                 println("[CartonaSunmiPrinter] Printer Version: ${printer.printerVersion}")
                 result.success("Printer Version: ${printer.printerVersion}")
             }
+
             initSunmiPrinterService -> {
                 println("[CartonaSunmiPrinter] Init sunmi printer service")
-                printer.initSunmiPrinterService(context);
+                printer.initSunmiPrinterService(context)
                 result.success(true)
             }
+
             deInitSunmiPrinterService -> {
                 println("[CartonaSunmiPrinter] De-init sunmi printer service")
-                printer.deInitSunmiPrinterService(context);
+                printer.deInitSunmiPrinterService(context)
                 result.success(true)
             }
+
             sendRawData -> {
                 call.argument<ByteArray?>("bytes")?.let {
                     println("[CartonaSunmiPrinter] Printing raw data: $it")
@@ -112,11 +138,13 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             cutPaper -> {
                 println("[CartonaSunmiPrinter] Cut paper")
                 printer.cutpaper();
                 result.success(true)
             }
+
             lineWrap -> {
                 call.argument<Int?>("lines")?.let {
                     println("[CartonaSunmiPrinter] Print line wraps: $it")
@@ -124,16 +152,19 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             getPrinterHead -> {
                 println("[CartonaSunmiPrinter] Get printer head")
                 printer.getPrinterHead(null);
                 result.success(true)
             }
+
             getPrinterDistance -> {
                 println("[CartonaSunmiPrinter] Get printer distance")
                 printer.getPrinterDistance(null);
                 result.success(true)
             }
+
             setAlign -> {
                 call.argument<Int?>("align")?.let {
                     println("[CartonaSunmiPrinter] Set align: $it")
@@ -141,11 +172,13 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             feedPaper -> {
                 println("[CartonaSunmiPrinter] Feed paper")
                 printer.feedPaper();
                 result.success(true)
             }
+
             printBarCode -> {
                 val data = call.argument<String>("data")
                 val symbology = call.argument<Int>("symbology")
@@ -162,6 +195,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(false)
                 }
             }
+
             printQr -> {
                 val data = call.argument<String>("data")
                 val moduleSize = call.argument<Int>("moduleSize")
@@ -176,6 +210,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(false)
                 }
             }
+
             printRow -> {
                 val textsJson = call.argument<String>("texts")
                 val widthStr = call.argument<String>("width")
@@ -203,6 +238,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(false)
                 }
             }
+
             printBitmap -> {
                 val bytes = call.argument<ByteArray>("bitmap")
                 val orientation = call.argument<Int>("orientation")
@@ -217,21 +253,25 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(false)
                 }
             }
+
             startTrans -> {
                 println("[CartonaSunmiPrinter] Start print transaction")
                 printer.startTransection();
                 result.success(true)
             }
+
             endTrans -> {
                 println("[CartonaSunmiPrinter] End print transaction")
                 printer.endTransection();
                 result.success(true)
             }
+
             openCashBox -> {
                 println("[CartonaSunmiPrinter] Open cash box")
                 printer.openCashBox();
                 result.success(true)
             }
+
             controlLcd -> {
                 call.argument<Int>("flag")?.let {
                     println("[CartonaSunmiPrinter] Control LCD: $it")
@@ -239,16 +279,19 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             sendTextToLcd -> {
                 println("[CartonaSunmiPrinter] Send text to LCD")
                 printer.sendTextToLcd();
                 result.success(true)
             }
+
             sendTextsToLcd -> {
                 println("[CartonaSunmiPrinter] Send texts to LCD")
                 printer.sendTextToLcd();
                 result.success(true)
             }
+
             sendPicToLcd -> {
                 call.argument<Bitmap>("bitmap")?.let {
                     println("[CartonaSunmiPrinter] Send pic to LCD: $it")
@@ -256,16 +299,19 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             showPrinterStatus -> {
                 println("[CartonaSunmiPrinter] Show printer status")
                 printer.showPrinterStatus(context);
                 result.success(true)
             }
+
             printOneLabel -> {
                 println("[CartonaSunmiPrinter] Print one label")
                 printer.printOneLabel();
                 result.success(true)
             }
+
             printMultiLabel -> {
                 call.argument<Int>("count")?.let {
                     println("[CartonaSunmiPrinter] Print $it labels")
@@ -273,6 +319,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                     result.success(true)
                 } ?: result.success(false)
             }
+
             else -> result.notImplemented()
         }
 
