@@ -2,6 +2,8 @@
 
 A wrapper around Sunmi's and Aisino's Android Printer SDK.
 
+Forked from [Cartona Sunmi Printer](https://pub.dev/packages/cartona_sunmi_printer)
+
 ## Installation
 
 ```bash
@@ -84,7 +86,7 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printSampleReceipt() async {
-    await FaciPointSunmiPrinter.startTransection();
+    await FaciPointSunmiPrinter.startTransaction();
 
     await FaciPointSunmiPrinter.setFontSize(24);
     await FaciPointSunmiPrinter.setBold(true);
@@ -92,7 +94,7 @@ class _DemoScreenState extends State<DemoScreen> {
     await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
     await FaciPointSunmiPrinter.printText("Hello World");
 
-    await FaciPointSunmiPrinter.endTransection();
+    await FaciPointSunmiPrinter.endTransaction();
   }
 }
 ```
