@@ -128,7 +128,7 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
                 Log.e("init", "failed")
 
                 if(returnResult) {
-                    printer.result.success(false)
+                    // printer.result.success(false)
                 }
             }
         })
