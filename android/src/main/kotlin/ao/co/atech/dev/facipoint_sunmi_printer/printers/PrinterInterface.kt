@@ -1,4 +1,4 @@
-package com.example.cartona_sunmi_printer.printers
+package ao.co.atech.dev.facipoint_sunmi_printer.printers
 
 import android.content.Context
 import android.graphics.Bitmap

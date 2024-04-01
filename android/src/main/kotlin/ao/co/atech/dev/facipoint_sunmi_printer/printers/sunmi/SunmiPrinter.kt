@@ -1,9 +1,9 @@
-package com.example.cartona_sunmi_printer.printers.sunmi
+package ao.co.atech.dev.facipoint_sunmi_printer.printers.sunmi
 
 import io.flutter.plugin.common.MethodChannel
 import android.content.Context
 import android.graphics.Bitmap
-import com.example.cartona_sunmi_printer.printers.PrinterInterface
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
 
 class SunmiPrinter(override val context: Context) : PrinterInterface {
 

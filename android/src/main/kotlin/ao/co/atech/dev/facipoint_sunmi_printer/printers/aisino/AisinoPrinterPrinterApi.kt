@@ -1,4 +1,4 @@
-package com.example.cartona_sunmi_printer.printers.aisino
+package ao.co.atech.dev.facipoint_sunmi_printer.printers.aisino
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,8 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.cartona_sunmi_printer.R
-import com.example.cartona_sunmi_printer.printers.PrinterInterface
+import ao.co.atech.dev.facipoint_sunmi_printer.R
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
 import com.vanstone.trans.api.PrinterApi
 import io.flutter.plugin.common.MethodChannel
 

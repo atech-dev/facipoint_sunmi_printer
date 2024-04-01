@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:cartona_sunmi_printer_example/AppPrinterService.dart';
-import 'package:cartona_sunmi_printer_example/extensions.dart';
+import 'package:facipoint_sunmi_printer_example/AppPrinterService.dart';
+import 'package:facipoint_sunmi_printer_example/extensions.dart';
 import 'package:flutter/material.dart';
 
 enum EAttributeType {

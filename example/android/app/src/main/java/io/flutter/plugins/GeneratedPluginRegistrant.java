@@ -16,9 +16,9 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
-      flutterEngine.getPlugins().add(new com.example.cartona_sunmi_printer.CartonaSunmiPrinterPlugin());
+      flutterEngine.getPlugins().add(new ao.co.atech.dev.facipoint_sunmi_printer.FaciPointSunmiPrinterPlugin());
     } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin cartona_sunmi_printer, com.example.cartona_sunmi_printer.CartonaSunmiPrinterPlugin", e);
+      Log.e(TAG, "Error registering plugin facipoint_sunmi_printer, ao.co.atech.dev.facipoint_sunmi_printer.FaciPointSunmiPrinterPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin());

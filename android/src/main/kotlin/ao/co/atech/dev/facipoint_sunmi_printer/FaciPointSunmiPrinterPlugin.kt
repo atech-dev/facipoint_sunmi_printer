@@ -1,14 +1,13 @@
-package com.example.cartona_sunmi_printer
+package ao.co.atech.dev.facipoint_sunmi_printer
 
-import com.example.cartona_sunmi_printer.printers.PrinterInterface
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.annotation.NonNull
-import com.example.cartona_sunmi_printer.printers.aisino.AisinoPrinter
-import com.example.cartona_sunmi_printer.printers.sunmi.SunmiPrintHelper
-import com.example.cartona_sunmi_printer.printers.sunmi.SunmiPrinter
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.aisino.AisinoPrinter
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.sunmi.SunmiPrintHelper
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.sunmi.SunmiPrinter
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -47,8 +46,8 @@ const val showPrinterStatus = "SHOW_PRINTER_STATUS"
 const val printOneLabel = "PRINT_ONE_LABEL"
 const val printMultiLabel = "PRINT_MULTI_LABEL"
 
-/** CartonaSunmiPrinterPlugin */
-class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
+/** FaciPointSunmiPrinterPlugin */
+class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
 
     private lateinit var context: Context
     private var channel: MethodChannel? = null
@@ -60,7 +59,7 @@ class CartonaSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
-        channel = MethodChannel(binding.binaryMessenger, "cartona_sunmi_printer")
+        channel = MethodChannel(binding.binaryMessenger, "facipoint_sunmi_printer")
 
         initPrinter()
 

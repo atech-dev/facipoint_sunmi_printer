@@ -39,8 +39,8 @@ enum SunmiPrintAlign {
   right,
 }
 
-class CartonaSunmiPrinter {
-  static const MethodChannel _channel = MethodChannel('cartona_sunmi_printer');
+class FaciPointSunmiPrinter {
+  static const MethodChannel _channel = MethodChannel('facipoint_sunmi_printer');
 
   /// Used to initialize the printer, must only be called once at the startup
   static Future<bool> initializePrinter() async {
