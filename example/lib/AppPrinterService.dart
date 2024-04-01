@@ -1,7 +1,7 @@
 // ignore: avoid_catches_without_on_clauses
-import 'package:cartona_sunmi_printer/cartona_sunmi_printer.dart';
-import 'package:cartona_sunmi_printer_example/extensions.dart';
-import 'package:cartona_sunmi_printer_example/models.dart';
+import 'package:facipoint_sunmi_printer/facipoint_sunmi_printer.dart';
+import 'package:facipoint_sunmi_printer_example/extensions.dart';
+import 'package:facipoint_sunmi_printer_example/models.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -77,8 +77,8 @@ class AppPrinterService {
 
   Future<AppPrinterService> initPrinterService() async {
     try {
-      var init = await CartonaSunmiPrinter.initializePrinter();
-      // await CartonaSunmiPrinter.showPrinterStatus();
+      var init = await FaciPointSunmiPrinter.initializePrinter();
+      // await FaciPointSunmiPrinter.showPrinterStatus();
       if (init) {
         isInitialized = true;
       } else {
@@ -136,7 +136,7 @@ class AppPrinterService {
 
   Future<void> startPrintingTransaction() async {
     try {
-      await CartonaSunmiPrinter.startTransaction();
+      await FaciPointSunmiPrinter.startTransaction();
     } catch (e, stackTrace) {
       log("ERROR startPrintingTransaction");
       log(e);
@@ -150,15 +150,15 @@ class AppPrinterService {
 
   Future<void> printReceiptHeader() async {
     try {
-      await CartonaSunmiPrinter.lineWrap(lines: 1);
+      await FaciPointSunmiPrinter.lineWrap(lines: 1);
 
-      await CartonaSunmiPrinter.setAlignment(
+      await FaciPointSunmiPrinter.setAlignment(
           SunmiPrintAlign.center); // Center align
       var bytes =
           await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
-      await CartonaSunmiPrinter.printBitmap(bytes, 0);
+      await FaciPointSunmiPrinter.printBitmap(bytes, 0);
 
-      await CartonaSunmiPrinter.lineWrap(lines: 2);
+      await FaciPointSunmiPrinter.lineWrap(lines: 2);
     } catch (e, stackTrace) {
       log("ERROR printReceiptHeader");
       log(e);
@@ -218,28 +218,28 @@ class AppPrinterService {
   Future<void> printReceiptFooter() async {
     try {
       if (showQrCode) {
-        // await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-        /*await CartonaSunmiPrinter.printQr(
+        // await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+        /*await FaciPointSunmiPrinter.printQr(
           qrCodeContent,
           qrCodeSize,
           30,
         );*/
-        // await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-        // await CartonaSunmiPrinter.setFontSize(12);
-        // await CartonaSunmiPrinter.printText('LEIA O QR CODE PARA OBTER MAIS DETALHES');
-        await CartonaSunmiPrinter.lineWrap(lines: 1);
-        await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-        await CartonaSunmiPrinter.setFontSize(20);
-        await CartonaSunmiPrinter.printText(
+        // await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+        // await FaciPointSunmiPrinter.setFontSize(12);
+        // await FaciPointSunmiPrinter.printText('LEIA O QR CODE PARA OBTER MAIS DETALHES');
+        await FaciPointSunmiPrinter.lineWrap(lines: 1);
+        await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+        await FaciPointSunmiPrinter.setFontSize(20);
+        await FaciPointSunmiPrinter.printText(
             'SOLICITE SEMPRE O SEU COMPROVATIVO');
       }
 
-      await CartonaSunmiPrinter.lineWrap(lines: 1);
+      await FaciPointSunmiPrinter.lineWrap(lines: 1);
 
       // await SunmiPrinter.setAlignment(SunmiPrintAlign.CENTER);
       // await SunmiPrinter.printText('RECIBO Nº $receiptNumber');
 
-      await CartonaSunmiPrinter.lineWrap(lines: 4); // Jump 2 lines
+      await FaciPointSunmiPrinter.lineWrap(lines: 4); // Jump 2 lines
     } catch (e, stackTrace) {
       log("ERROR printReceiptFooter");
       log(e);
@@ -250,9 +250,9 @@ class AppPrinterService {
 
   Future<void> endPrintReceipt() async {
     try {
-      await CartonaSunmiPrinter.cutPaper(); // SUBMIT and cut paper
-      await CartonaSunmiPrinter.endTransaction(); // Close the transaction
-      // await CartonaSunmiPrinter.feedPaper(); // Clear paper
+      await FaciPointSunmiPrinter.cutPaper(); // SUBMIT and cut paper
+      await FaciPointSunmiPrinter.endTransaction(); // Close the transaction
+      // await FaciPointSunmiPrinter.feedPaper(); // Clear paper
     } catch (e, stackTrace) {
       log("ERROR endPrintReceipt");
       log(e);
@@ -586,12 +586,12 @@ abstract class AppPrinterContent {
 
   static Future<void> sep([String ch = "*"]) async {
     // Second row
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.line(ch: ch);
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.line(ch: ch);
   }
 
   static Future<void> line([int lines = 1]) async {
-    await CartonaSunmiPrinter.lineWrap(lines: lines);
+    await FaciPointSunmiPrinter.lineWrap(lines: lines);
   }
 
   static Future<void> transactionTitle(
@@ -621,8 +621,8 @@ abstract class AppPrinterContent {
     String text, {
     SunmiPrintAlign align = SunmiPrintAlign.center,
   }) async {
-    await CartonaSunmiPrinter.setAlignment(align);
-    await CartonaSunmiPrinter.printText(
+    await FaciPointSunmiPrinter.setAlignment(align);
+    await FaciPointSunmiPrinter.printText(
       _maxEllipsis(text, text.diacriticLength, maxRowLength).removeDiacritics,
     );
   }
@@ -664,7 +664,7 @@ abstract class AppPrinterContent {
       ];
       var colWidths = [titleLength, valueLengthLimit];
       var colAlignments = [SunmiPrintAlign.left, SunmiPrintAlign.right];
-      await CartonaSunmiPrinter.printRow(labels, colWidths, colAlignments);
+      await FaciPointSunmiPrinter.printRow(labels, colWidths, colAlignments);
       if (row.lines != 0) {
         await line(row.lines);
       }
@@ -729,7 +729,7 @@ abstract class AppPrinterContent {
       SunmiPrintAlign.center,
       SunmiPrintAlign.right
     ];
-    await CartonaSunmiPrinter.printRow(labels, colWidths, colAlignments);
+    await FaciPointSunmiPrinter.printRow(labels, colWidths, colAlignments);
     if (row.lines != 0) {
       await line(row.lines);
     }

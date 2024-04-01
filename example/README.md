@@ -1,6 +1,6 @@
-# cartona_sunmi_printer_example
+# facipoint_sunmi_printer_example
 
-Demonstrates how to use the cartona_sunmi_printer plugin.
+Demonstrates how to use the facipoint_sunmi_printer plugin.
 
 ## Getting Started
 

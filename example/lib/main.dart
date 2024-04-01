@@ -1,16 +1,16 @@
 import 'dart:typed_data';
 
-import 'package:cartona_sunmi_printer_example/AppPrinterService.dart';
+import 'package:facipoint_sunmi_printer_example/AppPrinterService.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:cartona_sunmi_printer/cartona_sunmi_printer.dart';
+import 'package:facipoint_sunmi_printer/facipoint_sunmi_printer.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(const CartonaPrinterDemo());
+void main() => runApp(const FaciPointPrinterDemo());
 
-class CartonaPrinterDemo extends StatelessWidget {
-  const CartonaPrinterDemo({Key? key}) : super(key: key);
+class FaciPointPrinterDemo extends StatelessWidget {
+  const FaciPointPrinterDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _DemoScreenState extends State<DemoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cartona Sunmi Printer Demo'),
+        title: const Text('FaciPoint Sunmi Printer Demo'),
       ),
       body: Center(
         child: ListView(
@@ -80,7 +80,7 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printVersion() async {
-    final version = await CartonaSunmiPrinter.getPrinterVersion() ?? 'Unknown';
+    final version = await FaciPointSunmiPrinter.getPrinterVersion() ?? 'Unknown';
     showMessage('Running on: $version');
   }
 
@@ -88,123 +88,123 @@ class _DemoScreenState extends State<DemoScreen> {
     var colWidths = [5, 1, 5, 1, 18];
     var colAlignments = List.generate(5, (_) => SunmiPrintAlign.right);
 
-    await CartonaSunmiPrinter.startTransaction();
+    await FaciPointSunmiPrinter.startTransaction();
 
-    await CartonaSunmiPrinter.setFontSize(24);
-    await CartonaSunmiPrinter.setBold(true);
+    await FaciPointSunmiPrinter.setFontSize(24);
+    await FaciPointSunmiPrinter.setBold(true);
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText("جميل");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText("جميل");
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText('التاريخ: 21/12/2019');
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText('التاريخ: 21/12/2019');
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText('رقم الفاتوره: 12345678');
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText('رقم الفاتوره: 12345678');
 
-    await CartonaSunmiPrinter.lineWrap(lines: 1);
+    await FaciPointSunmiPrinter.lineWrap(lines: 1);
 
-    await CartonaSunmiPrinter.line();
+    await FaciPointSunmiPrinter.line();
 
-    await CartonaSunmiPrinter.setFontSize(20);
-    await CartonaSunmiPrinter.setBold(false);
+    await FaciPointSunmiPrinter.setFontSize(20);
+    await FaciPointSunmiPrinter.setBold(false);
 
     final labels = ['السعر', '', 'الكمية', '', 'اسم'];
-    await CartonaSunmiPrinter.printRow(labels, colWidths, colAlignments);
+    await FaciPointSunmiPrinter.printRow(labels, colWidths, colAlignments);
 
-    await CartonaSunmiPrinter.line();
+    await FaciPointSunmiPrinter.line();
 
     final p1 = ['100', '', '2x', '', 'مياه طبيعية بركة - 1.5 لتر'];
-    await CartonaSunmiPrinter.printRow(p1, colWidths, colAlignments);
+    await FaciPointSunmiPrinter.printRow(p1, colWidths, colAlignments);
 
-    await CartonaSunmiPrinter.line();
+    await FaciPointSunmiPrinter.line();
 
     final p2 = ['5', '', '1x', '', 'اللحيمي لانشون رومي بقطع الرومي - 250جم'];
-    await CartonaSunmiPrinter.printRow(p2, colWidths, colAlignments);
+    await FaciPointSunmiPrinter.printRow(p2, colWidths, colAlignments);
 
-    await CartonaSunmiPrinter.setBold(true);
-    await CartonaSunmiPrinter.setFontSize(24);
+    await FaciPointSunmiPrinter.setBold(true);
+    await FaciPointSunmiPrinter.setFontSize(24);
 
-    await CartonaSunmiPrinter.line();
+    await FaciPointSunmiPrinter.line();
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText('اجمالي المشتريات: ${100}');
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText('اجمالي المشتريات: ${100}');
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText('الخصم: ${10}');
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText('الخصم: ${10}');
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText('اجمالي: ${90}');
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText('اجمالي: ${90}');
 
-    await CartonaSunmiPrinter.lineWrap();
+    await FaciPointSunmiPrinter.lineWrap();
 
-    await CartonaSunmiPrinter.setBold(false);
+    await FaciPointSunmiPrinter.setBold(false);
 
-    await CartonaSunmiPrinter.endTransaction();
+    await FaciPointSunmiPrinter.endTransaction();
   }
 
   Future<void> printFPSampleReceipt1() async {
-    await CartonaSunmiPrinter.startTransaction();
+    await FaciPointSunmiPrinter.startTransaction();
 
     // Logo header
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
     var bytes =
         await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
-    await CartonaSunmiPrinter.printBitmap(bytes, 1);
+    await FaciPointSunmiPrinter.printBitmap(bytes, 1);
 
-    await CartonaSunmiPrinter.lineWrap(lines: 2);
+    await FaciPointSunmiPrinter.lineWrap(lines: 2);
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText("Directo");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText("Directo");
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText("Agente");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText("Agente");
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText("Josué Capita");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText("Josué Capita");
 
-    await CartonaSunmiPrinter.lineWrap(lines: 2);
+    await FaciPointSunmiPrinter.lineWrap(lines: 2);
 
-    await CartonaSunmiPrinter.line(ch: "*");
+    await FaciPointSunmiPrinter.line(ch: "*");
 
     final alignments = [SunmiPrintAlign.left, SunmiPrintAlign.right];
 
     var labels = ['Agente', 'Josue Capita'];
     var widths = [getTitleLength(labels.first), getValueLength(labels.last)];
-    await CartonaSunmiPrinter.printRow(labels, widths, alignments);
+    await FaciPointSunmiPrinter.printRow(labels, widths, alignments);
 
     labels = ['NIF', '005211378LA047'];
     widths = [getTitleLength(labels.first), getValueLength(labels.last)];
-    await CartonaSunmiPrinter.printRow(labels, widths, alignments);
+    await FaciPointSunmiPrinter.printRow(labels, widths, alignments);
 
     labels = ['Nº de Conta', 'FP 000 204'];
     widths = [getTitleLength(labels.first), getValueLength(labels.last)];
-    await CartonaSunmiPrinter.printRow(labels, widths, alignments);
+    await FaciPointSunmiPrinter.printRow(labels, widths, alignments);
 
-    await CartonaSunmiPrinter.line(ch: "*");
+    await FaciPointSunmiPrinter.line(ch: "*");
 
     labels = ['Data', '16/11/2023 09:35'];
     widths = [getTitleLength(labels.first), getValueLength(labels.last)];
-    await CartonaSunmiPrinter.printRow(labels, widths, alignments);
+    await FaciPointSunmiPrinter.printRow(labels, widths, alignments);
 
-    await CartonaSunmiPrinter.line(ch: "*");
+    await FaciPointSunmiPrinter.line(ch: "*");
 
     labels = ['AOA', '10.000,00'];
     widths = [getTitleLength(labels.first), getValueLength(labels.last)];
-    await CartonaSunmiPrinter.printRow(labels, widths, alignments);
+    await FaciPointSunmiPrinter.printRow(labels, widths, alignments);
 
-    await CartonaSunmiPrinter.lineWrap();
+    await FaciPointSunmiPrinter.lineWrap();
 
-    // await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    // await CartonaSunmiPrinter.printQr("OLA MUNDO", 3, 30);
+    // await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    // await FaciPointSunmiPrinter.printQr("OLA MUNDO", 3, 30);
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.setFontSize(20);
-    await CartonaSunmiPrinter.printText("SOLICITE SEMPRE O SEU COMPROVATIVO");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.setFontSize(20);
+    await FaciPointSunmiPrinter.printText("SOLICITE SEMPRE O SEU COMPROVATIVO");
 
-    await CartonaSunmiPrinter.lineWrap(lines: 4);
+    await FaciPointSunmiPrinter.lineWrap(lines: 4);
 
-    await CartonaSunmiPrinter.endTransaction();
+    await FaciPointSunmiPrinter.endTransaction();
   }
 
   Future<void> printFPSampleReceipt2() async {
@@ -312,11 +312,11 @@ class _DemoScreenState extends State<DemoScreen> {
   void _initPrinterService() {
     try {
       apS = AppPrinterService();
-      debugPrint('[CartonaPrinterDemo] Initializing printer');
+      debugPrint('[FaciPointPrinterDemo] Initializing printer');
       apS.initPrinterService().then((_) {
         setState(() => _isBound = true);
-        debugPrint('[CartonaPrinterDemo] Printer initialized');
-        showMessage('[CartonaPrinterDemo] Printer initialized');
+        debugPrint('[FaciPointPrinterDemo] Printer initialized');
+        showMessage('[FaciPointPrinterDemo] Printer initialized');
       });
     } catch(e, stackTrace) {
       print("ERROR INITIALIZING");
