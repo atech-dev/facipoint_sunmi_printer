@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.example.cartona_sunmi_printer">
+  package="ao.co.atech.dev.facipoint_sunmi_printer">
 
     <!-- To support printerlibrary on Android R -->
     <queries>

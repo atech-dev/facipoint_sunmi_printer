@@ -1,17 +1,21 @@
-# Cartona Sunmi Printer
+# FaciPoint Sunmi Printer
 
-A wrapper around Sunmi's Android printer SDK.
+A wrapper around Sunmi's and Aisino's Android Printer SDK.
 
 ## Installation
 
 ```bash
-flutter pub add cartona_sunmi_printer
+flutter pub add facipoint_sunmi_printer
 ```
 
 ## Tested Devices
 
 - Sunmi V2 Pro
 - Sunmi V2S
+- Sunmi P2 SE
+- Sunmi P2 LITE SE
+- Aisino A90 Pro
+- Aisino A75 Pro
 
 ## Sample Usage
 
@@ -21,12 +25,12 @@ In your flutter application, add the following:
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:cartona_sunmi_printer/cartona_sunmi_printer.dart';
+import 'package:facipoint_sunmi_printer/facipoint_sunmi_printer.dart';
 
-void main() => runApp(const CartonaPrinterDemo());
+void main() => runApp(const FaciPointPrinterDemo());
 
-class CartonaPrinterDemo extends StatelessWidget {
-  const CartonaPrinterDemo({Key? key}) : super(key: key);
+class FaciPointPrinterDemo extends StatelessWidget {
+  const FaciPointPrinterDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +54,11 @@ class _DemoScreenState extends State<DemoScreen> {
   @override
   void initState() {
     super.initState();
-    debugPrint('[CartonaPrinterDemo] Initializing printer');
-    CartonaSunmiPrinter.initializePrinter().then((_) {
+    debugPrint('[FaciPointPrinterDemo] Initializing printer');
+    FaciPointSunmiPrinter.initializePrinter().then((_) {
       setState(() => _isBound = true);
-      debugPrint('[CartonaPrinterDemo] Printer initialized');
-      showMessage('[CartonaPrinterDemo] Printer initialized');
+      debugPrint('[FaciPointPrinterDemo] Printer initialized');
+      showMessage('[FaciPointPrinterDemo] Printer initialized');
     });
   }
 
@@ -62,7 +66,7 @@ class _DemoScreenState extends State<DemoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cartona Sunmi Printer Demo'),
+        title: const Text('FaciPoint Sunmi Printer Demo'),
       ),
       body: Center(
         child: ListView(
@@ -80,15 +84,15 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printSampleReceipt() async {
-    await CartonaSunmiPrinter.startTransection();
+    await FaciPointSunmiPrinter.startTransection();
 
-    await CartonaSunmiPrinter.setFontSize(24);
-    await CartonaSunmiPrinter.setBold(true);
+    await FaciPointSunmiPrinter.setFontSize(24);
+    await FaciPointSunmiPrinter.setBold(true);
 
-    await CartonaSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await CartonaSunmiPrinter.printText("Hello World");
+    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
+    await FaciPointSunmiPrinter.printText("Hello World");
 
-    await CartonaSunmiPrinter.endTransection();
+    await FaciPointSunmiPrinter.endTransection();
   }
 }
 ```
