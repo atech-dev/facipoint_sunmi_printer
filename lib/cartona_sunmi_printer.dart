@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 
+// region Command names
 const commandHasPrinter = "HAS_PRINTER";
 const commandInitPrinter = "INIT_PRINTER";
 const commandPrinterVersion = "PRINTER_VERSION";
@@ -30,6 +31,7 @@ const commandOpenCashBox = "OPEN_CASHBOX";
 const commandShowPrinterStatus = "SHOW_PRINTER_STATUS";
 const commandPrintOneLabel = "PRINT_ONE_LABEL";
 const commandPrintMultiLabel = "PRINT_MULTI_LABEL";
+// endregion
 
 enum SunmiPrintAlign {
   left,
@@ -76,7 +78,7 @@ class CartonaSunmiPrinter {
   }
 
   /// Sets the font size
-  static Future<void> setFontSize([double size = 24]) async {
+  static Future<void> setFontSize([int size = 24]) async {
     final args = <String, dynamic>{"fontSize": size};
     await _channel.invokeMethod(commandSetFontSize, args);
   }
@@ -195,12 +197,12 @@ class CartonaSunmiPrinter {
   }
 
   /// Starts a transaction
-  static Future<void> startTransection() async {
+  static Future<void> startTransaction() async {
     await _channel.invokeMethod(commandStartTrans);
   }
 
   /// Ends a transaction
-  static Future<void> endTransection() async {
+  static Future<void> endTransaction() async {
     await _channel.invokeMethod(commandEndTrans);
   }
 
