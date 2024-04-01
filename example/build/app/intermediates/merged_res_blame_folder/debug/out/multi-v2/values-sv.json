@@ -4,7 +4,7 @@
             "outputFile": "/Users/suporte/projects/flutter/cartona_sunmi_printer/example/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sv/values-sv.xml",
             "map": [
                 {
-                    "source": "/Users/suporte/.gradle/caches/transforms-3/1afda34f0907ea926f1fde0873b8a516/transformed/core-1.6.0/res/values-sv/values-sv.xml",
+                    "source": "/Users/suporte/.gradle/caches/transforms-3/d972f9b637fed0a2c805911428c93e12/transformed/core-1.7.0/res/values-sv/values-sv.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

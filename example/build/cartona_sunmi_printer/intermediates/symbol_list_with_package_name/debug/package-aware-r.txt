@@ -22,6 +22,7 @@ attr fontProviderSystemFontFamily
 attr fontStyle
 attr fontVariationSettings
 attr fontWeight
+attr lStar
 attr layoutManager
 attr nestedScrollViewStyle
 attr placeholderActivityName
@@ -41,10 +42,12 @@ attr stackFromEnd
 attr ttcIndex
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color black
 color notification_action_color_filter
 color notification_icon_bg_color
 color ripple_material_light
 color secondary_text_default_material_light
+color white
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -133,6 +136,10 @@ id icon
 id icon_group
 id info
 id italic
+id item1
+id item2
+id item3
+id item4
 id item_touch_helper_previous_elevation
 id line1
 id line3
@@ -162,6 +169,7 @@ id text
 id text2
 id time
 id title
+id view_tree_lifecycle_owner
 integer status_bar_notification_info_maxnum
 layout custom_dialog
 layout notification_action
@@ -170,6 +178,8 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+menu example_menu
+menu example_menu2
 string app_name
 string status_bar_notification_info_overflow
 style TextAppearance_Compat_Notification
@@ -182,7 +192,7 @@ style Widget_Compat_NotificationActionText
 styleable ActivityFilter activityAction activityName
 styleable ActivityRule alwaysExpand
 styleable Capability queryPatterns shortcutMatchRequired
-styleable ColorStateListItem alpha android_alpha android_color
+styleable ColorStateListItem alpha android_alpha android_color android_lStar lStar
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontStyle android_fontVariationSettings android_fontWeight android_ttcIndex font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable GradientColor android_centerColor android_centerX android_centerY android_endColor android_endX android_endY android_gradientRadius android_startColor android_startX android_startY android_tileMode android_type

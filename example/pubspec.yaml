@@ -4,13 +4,16 @@ description: Demonstrates how to use the cartona_sunmi_printer plugin.
 publish_to: "none"
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.18.4 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cartona_sunmi_printer:
     path: ../
+  fluttertoast: ^8.2.2
+  intl: ^0.18.0
+  characters: ^1.3.0
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/

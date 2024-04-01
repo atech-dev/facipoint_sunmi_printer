@@ -22,6 +22,7 @@ attr fontProviderSystemFontFamily
 attr fontStyle
 attr fontVariationSettings
 attr fontWeight
+attr lStar
 attr layoutManager
 attr nestedScrollViewStyle
 attr placeholderActivityName
@@ -41,8 +42,10 @@ attr stackFromEnd
 attr ttcIndex
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color black
 color notification_action_color_filter
 color notification_icon_bg_color
+color white
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -71,6 +74,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable corner
 drawable launch_background
 drawable notification_action_background
 drawable notification_bg
@@ -84,6 +88,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable toast_bg
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -131,7 +136,12 @@ id forever
 id icon
 id icon_group
 id info
+id is_pooling_container_tag
 id italic
+id item1
+id item2
+id item3
+id item4
 id item_touch_helper_previous_elevation
 id line1
 id line3
@@ -141,6 +151,7 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id pooling_container_listener_holder_tag
 id right_icon
 id right_side
 id rtl
@@ -161,6 +172,7 @@ id text
 id text2
 id time
 id title
+id view_tree_lifecycle_owner
 integer status_bar_notification_info_maxnum
 layout custom_dialog
 layout notification_action
@@ -169,6 +181,9 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout toast_custom
+menu example_menu
+menu example_menu2
 mipmap ic_launcher
 string app_name
 string status_bar_notification_info_overflow
@@ -184,7 +199,7 @@ style Widget_Compat_NotificationActionText
 styleable ActivityFilter activityAction activityName
 styleable ActivityRule alwaysExpand
 styleable Capability queryPatterns shortcutMatchRequired
-styleable ColorStateListItem android_color android_alpha alpha
+styleable ColorStateListItem android_color android_alpha android_lStar alpha lStar
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
