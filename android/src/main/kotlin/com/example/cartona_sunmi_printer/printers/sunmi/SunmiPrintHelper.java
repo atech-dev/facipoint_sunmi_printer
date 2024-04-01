@@ -1,4 +1,4 @@
-package com.example.cartona_sunmi_printer;
+package com.example.cartona_sunmi_printer.printers.sunmi;
 
 import android.content.Context;
 import android.graphics.Bitmap;
