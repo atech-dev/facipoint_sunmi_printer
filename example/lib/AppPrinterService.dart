@@ -4,7 +4,6 @@ import 'package:facipoint_sunmi_printer_example/extensions.dart';
 import 'package:facipoint_sunmi_printer_example/models.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 import 'constants.dart';
 
