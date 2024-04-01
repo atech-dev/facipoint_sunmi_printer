@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cartona_sunmi_printer_example">
+    package="ao.co.atech.dev.facipoint_sunmi_printer_example">
 
     <!-- To support printerlibrary on Android R -->
     <queries>
@@ -7,7 +7,7 @@
     </queries>
 
    <application
-        android:label="cartona_sunmi_printer_example"
+        android:label="facipoint_sunmi_printer_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

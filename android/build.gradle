@@ -1,4 +1,4 @@
-group 'com.example.cartona_sunmi_printer'
+group 'ao.co.atech.dev.facipoint_sunmi_printer'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -51,4 +51,8 @@ dependencies {
     implementation 'com.google.zxing:core:3.5.0'
     implementation 'com.sunmi:printerlibrary:1.0.21'
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation files('libs/AppSdkAidl_buildBy_20210713.jar')
+    implementation files('libs/Common.jar')
+    implementation files('libs/qUICS.jar')
+    implementation files('libs/vanstoneSdkClient-noemv_20220114.jar')
 }
