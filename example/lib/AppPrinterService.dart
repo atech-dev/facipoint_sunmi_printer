@@ -77,7 +77,9 @@ class AppPrinterService {
   Future<AppPrinterService> initPrinterService() async {
     try {
       var init = await FaciPointSunmiPrinter.initializePrinter();
-      // await FaciPointSunmiPrinter.showPrinterStatus();
+      await FaciPointSunmiPrinter.showPrinterStatus();
+      var has = await FaciPointSunmiPrinter.hasPrinter();
+      print("has: $has");
       if (init) {
         isInitialized = true;
       } else {
