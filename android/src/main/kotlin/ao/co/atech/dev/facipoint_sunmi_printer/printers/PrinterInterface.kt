@@ -10,126 +10,130 @@ interface PrinterInterface {
     val context: Context
 
     fun mainInitPrinterService() {
-        result.notImplemented()
+        returnEmptyResult("mainInitPrinterService")
     }
 
     fun initPrinterService() {
-        result.notImplemented()
+        returnEmptyResult("initPrinterService")
     }
 
     fun initPrinter() {
-        result.notImplemented()
+        returnEmptyResult("initPrinter")
     }
 
     fun hasPrinter() {
-        result.notImplemented()
+        returnEmptyResult("hasPrinter")
     }
 
     fun printText(text: String) {
-        result.notImplemented()
+        returnEmptyResult("printText")
     }
 
     fun setBold(enable: Boolean) {
-        result.notImplemented()
+        returnEmptyResult("setBold")
     }
 
     fun setUnderline(enable: Boolean) {
-        result.notImplemented()
+        returnEmptyResult("setUnderline")
     }
 
     fun setFontSize(size: Int) {
-        result.notImplemented()
+        returnEmptyResult("setFontSize")
     }
 
     fun printerVersion() {
-        result.notImplemented()
+        returnEmptyResult("printerVersion")
     }
 
     fun deInitPrinterService() {
-        result.notImplemented()
+        returnEmptyResult("deInitPrinterService")
     }
 
     fun sendRawData(data: ByteArray) {
-        result.notImplemented()
+        returnEmptyResult("sendRawData")
     }
 
     fun cutPaper() {
-        result.notImplemented()
+        returnEmptyResult("cutPaper")
     }
 
     fun lineWrap(lines: Int) {
-        result.notImplemented()
+        returnEmptyResult("lineWrap")
     }
 
     fun getPrinterHead() {
-        result.notImplemented()
+        returnEmptyResult("getPrinterHead")
     }
 
     fun getPrinterDistance() {
-        result.notImplemented()
+        returnEmptyResult("getPrinterDistance")
     }
 
     fun setAlign(int: Int) {
-        result.notImplemented()
+        returnEmptyResult("setAlign")
     }
 
     fun feedPaper() {
-        result.notImplemented()
+        returnEmptyResult("feedPaper")
     }
 
     fun printBarCode(data: String, symbology: Int, height: Int, width: Int, textPosition: Int) {
-        result.notImplemented()
+        returnEmptyResult("printBarCode")
     }
 
     fun printQr(data: String, moduleSize: Int, errorLevel: Int) {
-        result.notImplemented()
+        returnEmptyResult("printQr")
     }
 
     fun printRow(texts: Array<String>, width: IntArray, align: IntArray) {
-        result.notImplemented()
+        returnEmptyResult("printRow")
     }
 
     fun printBitmap(bitmap: Bitmap, orientation: Int) {
-        result.notImplemented()
+        returnEmptyResult("printBitmap")
     }
 
     fun startTransaction() {
-        result.notImplemented()
+        returnEmptyResult("startTransaction")
     }
 
     fun endTransaction() {
-        result.notImplemented()
+        returnEmptyResult("endTransaction")
     }
 
     fun openCashBox() {
-        result.notImplemented()
+        returnEmptyResult("openCashBox")
     }
 
     fun controlLcd(flag: Int) {
-        result.notImplemented()
+        returnEmptyResult("controlLcd")
     }
 
     fun sendTextToLcd() {
-        result.notImplemented()
+        returnEmptyResult("sendTextToLcd")
     }
 
     fun sendTextsToLcd() {
-        result.notImplemented()
+        returnEmptyResult("sendTextsToLcd")
     }
 
     fun sendPicToLcd(pic: Bitmap) {
-        result.notImplemented()
+        returnEmptyResult("sendPicToLcd")
     }
 
     fun showPrinterStatus() {
-        result.notImplemented()
+        returnEmptyResult("showPrinterStatus")
     }
 
     fun printOneLabel() {
-        result.notImplemented()
+        returnEmptyResult("printOneLabel")
     }
 
     fun printMultiLabel(count: Int) {
-        result.notImplemented()
+        returnEmptyResult("printMultiLabel")
+    }
+
+    private fun returnEmptyResult(methodName: String) {
+        println("[${methodName}] Not Implemented")
     }
 }

@@ -7,7 +7,12 @@ import 'dart:async';
 import 'package:facipoint_sunmi_printer/facipoint_sunmi_printer.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(const FaciPointPrinterDemo());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppPrinterService().initPrinterService();
+
+  runApp(const FaciPointPrinterDemo());
+}
 
 class FaciPointPrinterDemo extends StatelessWidget {
   const FaciPointPrinterDemo({Key? key}) : super(key: key);
@@ -56,10 +61,6 @@ class _DemoScreenState extends State<DemoScreen> {
             /*ElevatedButton(
               onPressed: !_isBound ? null : () => printVersion(),
               child: const Text('Check Printer Version'),
-            ),
-            ElevatedButton(
-              onPressed: !_isBound ? null : () => printSampleReceipt(),
-              child: const Text('Print Sample Receipt'),
             ),*/
             ElevatedButton(
               onPressed: !_isBound ? null : () => printFPSampleReceipt1(),
@@ -84,72 +85,13 @@ class _DemoScreenState extends State<DemoScreen> {
     showMessage('Running on: $version');
   }
 
-  Future<void> printSampleReceipt() async {
-    var colWidths = [5, 1, 5, 1, 18];
-    var colAlignments = List.generate(5, (_) => SunmiPrintAlign.right);
-
-    await FaciPointSunmiPrinter.startTransaction();
-
-    await FaciPointSunmiPrinter.setFontSize(24);
-    await FaciPointSunmiPrinter.setBold(true);
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText("جميل");
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText('التاريخ: 21/12/2019');
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText('رقم الفاتوره: 12345678');
-
-    await FaciPointSunmiPrinter.lineWrap(lines: 1);
-
-    await FaciPointSunmiPrinter.line();
-
-    await FaciPointSunmiPrinter.setFontSize(20);
-    await FaciPointSunmiPrinter.setBold(false);
-
-    final labels = ['السعر', '', 'الكمية', '', 'اسم'];
-    await FaciPointSunmiPrinter.printRow(labels, colWidths, colAlignments);
-
-    await FaciPointSunmiPrinter.line();
-
-    final p1 = ['100', '', '2x', '', 'مياه طبيعية بركة - 1.5 لتر'];
-    await FaciPointSunmiPrinter.printRow(p1, colWidths, colAlignments);
-
-    await FaciPointSunmiPrinter.line();
-
-    final p2 = ['5', '', '1x', '', 'اللحيمي لانشون رومي بقطع الرومي - 250جم'];
-    await FaciPointSunmiPrinter.printRow(p2, colWidths, colAlignments);
-
-    await FaciPointSunmiPrinter.setBold(true);
-    await FaciPointSunmiPrinter.setFontSize(24);
-
-    await FaciPointSunmiPrinter.line();
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText('اجمالي المشتريات: ${100}');
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText('الخصم: ${10}');
-
-    await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
-    await FaciPointSunmiPrinter.printText('اجمالي: ${90}');
-
-    await FaciPointSunmiPrinter.lineWrap();
-
-    await FaciPointSunmiPrinter.setBold(false);
-
-    await FaciPointSunmiPrinter.endTransaction();
-  }
-
   Future<void> printFPSampleReceipt1() async {
     await FaciPointSunmiPrinter.startTransaction();
 
     // Logo header
     await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
     var bytes =
-        await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
+    await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
     await FaciPointSunmiPrinter.printBitmap(bytes, 1);
 
     await FaciPointSunmiPrinter.lineWrap(lines: 2);
@@ -292,15 +234,15 @@ class _DemoScreenState extends State<DemoScreen> {
 
   int getTitleLength(String text) {
     return (maxRowTitleLength < text.diacriticLength
-            ? maxRowTitleLength
-            : text.diacriticLength) +
+        ? maxRowTitleLength
+        : text.diacriticLength) +
         1;
   }
 
   int getValueLength(String text) {
     return (maxRowTitleLength < text.diacriticLength
-            ? maxRowTitleLength
-            : text.diacriticLength) +
+        ? maxRowTitleLength
+        : text.diacriticLength) +
         1;
   }
 

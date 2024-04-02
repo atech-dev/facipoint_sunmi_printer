@@ -37,20 +37,20 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
         get() = TODO()
         set(v) {printer.result = v}
 
-    override fun showPrinterStatus() {
-        result.success(false)
-    }
-
     override fun initPrinter() {
         initSDK()
+    }
+
+    override fun mainInitPrinterService() {
+        initSDK(false)
     }
 
     override fun initPrinterService() {
         initSDK()
     }
 
-    override fun mainInitPrinterService() {
-        initSDK(false)
+    override fun deInitPrinterService() {
+        printer.result.success(false)
     }
 
     override fun startTransaction() {
@@ -59,6 +59,10 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
 
     override fun endTransaction() {
         printer.endTransaction()
+    }
+
+    override fun hasPrinter() {
+        printer.result.success(false)
     }
 
     override fun printText(text: String) {
@@ -77,6 +81,14 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
         printer.setFontSize(size)
     }
 
+    override fun printerVersion() {
+        printer.result.success(false)
+    }
+
+    override fun sendRawData(data: ByteArray) {
+        printer.result.success(false)
+    }
+
     override fun cutPaper() {
         PrinterApi.PrnCut_Api()
     }
@@ -85,12 +97,24 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
         printer.lineWrap(lines)
     }
 
+    override fun getPrinterHead() {
+        printer.result.success(false)
+    }
+
+    override fun getPrinterDistance() {
+        printer.result.success(false)
+    }
+
     override fun setAlign(int: Int) {
         printer.setAlign(int)
     }
 
     override fun feedPaper() {
         printer.feedPaper()
+    }
+
+    override fun printBarCode(data: String, symbology: Int, height: Int, width: Int, textPosition: Int) {
+        printer.result.success(true)
     }
 
     override fun printQr(data: String, moduleSize: Int, errorLevel: Int) {
@@ -105,33 +129,69 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
         printer.printBitmap(bitmap, orientation)
     }
 
+    override fun openCashBox() {
+        printer.result.success(false)
+    }
+
+    override fun controlLcd(flag: Int) {
+        printer.result.success(false)
+    }
+
+    override fun sendTextToLcd() {
+        printer.result.success(false)
+    }
+
+    override fun sendTextsToLcd() {
+        printer.result.success(false)
+    }
+
+    override fun sendPicToLcd(pic: Bitmap) {
+        printer.result.success(false)
+    }
+
+    override fun showPrinterStatus() {
+        printer.result.success(false)
+    }
+
+    override fun printOneLabel() {
+        printer.result.success(false)
+    }
+
+    override fun printMultiLabel(count: Int) {
+        printer.result.success(false)
+    }
+
     // region Other
     private fun initSDK(returnResult: Boolean = true) {
         val curAppDir = context.filesDir.absolutePath
-        SystemApi.SystemInit_Api(0, CommonConvert.StringToBytes("$curAppDir/\u0000"), context, object :
-            ISdkStatue {
-            override fun sdkInitSuccessed() {
-                Log.e("init", "success")
+        SystemApi.SystemInit_Api(
+            0,
+            CommonConvert.StringToBytes("$curAppDir/\u0000"),
+            context,
+            object :
+                ISdkStatue {
+                override fun sdkInitSuccessed() {
+                    Log.e("init", "success")
 
-                CommApi.InitComm_Api(context)
-                Common.Init_Api()
-                Common.DbgEN_Api(1)
+                    CommApi.InitComm_Api(context)
+                    Common.Init_Api()
+                    Common.DbgEN_Api(1)
 
-                Common.setCallback(ccb)
+                    Common.setCallback(ccb)
 
-                if(returnResult) {
-                    printer.result.success(true)
+                    if (returnResult) {
+                        printer.result.success(true)
+                    }
                 }
-            }
 
-            override fun sdkInitFailed() {
-                Log.e("init", "failed")
+                override fun sdkInitFailed() {
+                    Log.e("init", "failed")
 
-                if(returnResult) {
-                    // printer.result.success(false)
+                    if (returnResult) {
+                        // printer.result.success(false)
+                    }
                 }
-            }
-        })
+            })
     }
 
     private val ccb: CommonCB = object : CommonCB {
@@ -146,7 +206,13 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
             val sTemp = ByteArray(32)
             if (PedApi.PEDReadPinPadSn_Api(sTemp) == 0x00) {
                 val nLen = (sTemp[0] - 0x30) * 10 + (sTemp[1] - 0x30) + 2
-                if (nLen > 11) ByteUtils.memcpy(bytes, 0, sTemp, 2 + nLen - 11, 11) else ByteUtils.memcpy(bytes, 0, sTemp, 2, nLen)
+                if (nLen > 11) ByteUtils.memcpy(
+                    bytes,
+                    0,
+                    sTemp,
+                    2 + nLen - 11,
+                    11
+                ) else ByteUtils.memcpy(bytes, 0, sTemp, 2, nLen)
             }
             return 0
         }
