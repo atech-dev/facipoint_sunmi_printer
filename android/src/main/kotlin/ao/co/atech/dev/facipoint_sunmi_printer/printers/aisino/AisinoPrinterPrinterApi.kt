@@ -21,6 +21,20 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
     override lateinit var result: MethodChannel.Result
         set
 
+    override fun hasPrinter() {
+        val status = PrinterApi.PrnStatus_Api()
+        // Status
+        // 136 - Success, has paper and is ready to print
+        // 2 - No paper
+        // 3 - Printer is overheated
+        println("[$printerTag] status: $status")
+        if(status == 2 || status == 3 || status == 136) {
+            result.success(true)
+        } else {
+            result.success(false)
+        }
+    }
+
     override fun printText(text: String) {
         PrinterApi.PrnLineSpaceSet_Api(4.toShort(), 0x00)
         PrinterApi.PrnStr_Api(text)

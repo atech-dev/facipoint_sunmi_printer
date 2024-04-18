@@ -3,7 +3,9 @@ package ao.co.atech.dev.facipoint_sunmi_printer
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.annotation.NonNull
+import ao.co.atech.dev.facipoint_sunmi_printer.printers.NoPrinter
 import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
 import ao.co.atech.dev.facipoint_sunmi_printer.printers.aisino.AisinoPrinter
 import ao.co.atech.dev.facipoint_sunmi_printer.printers.sunmi.SunmiPrintHelper
@@ -15,6 +17,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import org.json.JSONArray
 
+// region MethodCall Constants
 const val hasPrinter = "HAS_PRINTER"
 const val initPrinter = "INIT_PRINTER"
 const val printerVersion = "PRINTER_VERSION"
@@ -45,6 +48,12 @@ const val sendPicToLcd = "SEND_PIC_TO_LCD"
 const val showPrinterStatus = "SHOW_PRINTER_STATUS"
 const val printOneLabel = "PRINT_ONE_LABEL"
 const val printMultiLabel = "PRINT_MULTI_LABEL"
+// endregion
+
+enum class EPrinterTypes(val value: String) {
+    Sunmi("sunmi"),
+    Aisino("aisino"),
+}
 
 /** FaciPointSunmiPrinterPlugin */
 class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
@@ -53,7 +62,7 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
     private var channel: MethodChannel? = null
 
     // Configured Printers
-    private lateinit var printer: PrinterInterface
+    private var printer: PrinterInterface = NoPrinter()
     private lateinit var sunmiPrinter: SunmiPrinter
     private lateinit var aisinoPrinter: AisinoPrinter
 
@@ -307,19 +316,29 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun initPrinter() {
         // Init configured printers
-        sunmiPrinter = SunmiPrinter(context)
-        aisinoPrinter = AisinoPrinter(context)
+        val brand = (Build.BRAND).lowercase()
+        when (brand) {
+            EPrinterTypes.Sunmi.name -> {
+                // Instantiate sunmi printer
+                sunmiPrinter = SunmiPrinter(context)
+                // Trying to init sunmi printer
+                sunmiPrinter.mainInitPrinterService()
+                // Check if the sunmi device has a printer
 
-        // Try to init sunmi printer
-        sunmiPrinter.mainInitPrinterService()
-        // In case of error in init
-        println("PRTER: ${sunmiPrinter.sunmiPrinterHelper.sunmiPrinter}")
-        printer = if(sunmiPrinter.sunmiPrinterHelper.sunmiPrinter != SunmiPrintHelper.NoSunmiPrinter) {
-            sunmiPrinter
-        } else {
-            // In case of error, try to init the printer service
-            aisinoPrinter.mainInitPrinterService()
-            aisinoPrinter
+                if (sunmiPrinter.sunmiPrinterHelper.sunmiPrinter != SunmiPrintHelper.NoSunmiPrinter) {
+                    // Setting the printer
+                    printer = sunmiPrinter
+                }
+            }
+
+            EPrinterTypes.Aisino.name -> {
+                // Instantiate aisino printer
+                aisinoPrinter = AisinoPrinter(context)
+                // Trying to init aisino printer
+                aisinoPrinter.mainInitPrinterService()
+                // Setting the printer
+                printer = aisinoPrinter
+            }
         }
 
         println("[${printer.printerTag}] Initialization")
