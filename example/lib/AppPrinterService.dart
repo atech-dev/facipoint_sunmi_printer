@@ -74,6 +74,17 @@ class AppPrinterService {
     setStopPrinting();
   }
 
+  Future<bool> hasPrinter() async {
+    try {
+      return await FaciPointSunmiPrinter.hasPrinter();
+    } catch (e, stackTrace) {
+      log("ERROR initPrinter");
+      log(e);
+      log(stackTrace);
+      return false;
+    }
+  }
+
   Future<AppPrinterService> initPrinterService() async {
     try {
       var init = await FaciPointSunmiPrinter.initializePrinter();
@@ -338,8 +349,7 @@ class AppPrinterService {
 
     var serviceAttributeModels = facipayServiceModel.attributes != null
         ? facipayServiceModel.attributes!
-            .where((e) => ![]
-                .contains(e.noAtributo))
+            .where((e) => ![].contains(e.noAtributo))
             .toList()
         : [];
 
@@ -358,8 +368,7 @@ class AppPrinterService {
           [
             PrinterContentRow2(
               "AOA",
-              simpleNumberFormat(
-                      movementModel.amount.toStringAsFixed(2))
+              simpleNumberFormat(movementModel.amount.toStringAsFixed(2))
                   .trim(),
             ),
             PrinterContentRow2(
@@ -393,9 +402,7 @@ class AppPrinterService {
         [
           PrinterContentRow2(
             "AOA",
-            simpleNumberFormat(
-                    movementModel.amount.toStringAsFixed(2))
-                .trim(),
+            simpleNumberFormat(movementModel.amount.toStringAsFixed(2)).trim(),
           ),
         ],
       ),
@@ -434,9 +441,7 @@ class AppPrinterService {
         [
           PrinterContentRow2(
             "AOA",
-            simpleNumberFormat(
-                    movementModel.amount.toStringAsFixed(2))
-                .trim(),
+            simpleNumberFormat(movementModel.amount.toStringAsFixed(2)).trim(),
           ),
           PrinterContentRow2(
             receiptDate,
@@ -459,8 +464,7 @@ class AppPrinterService {
     String receiptDateTime = date.dateFormatV5();
 
     var receiptValue =
-        simpleNumberFormat(settlementNote.value.toStringAsFixed(2))
-            .trim();
+        simpleNumberFormat(settlementNote.value.toStringAsFixed(2)).trim();
 
     await printReceipt(sections: [
       PrinterContentSection2([
@@ -514,8 +518,7 @@ class AppPrinterService {
     String receiptDateTime = date.dateFormatV5();
 
     var receiptValue =
-        simpleNumberFormat(movementModel.amount.toStringAsFixed(2))
-            .trim();
+        simpleNumberFormat(movementModel.amount.toStringAsFixed(2)).trim();
 
     await printReceipt(sections: [
       PrinterContentSection2([

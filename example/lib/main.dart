@@ -15,7 +15,7 @@ void main() async {
 }
 
 class FaciPointPrinterDemo extends StatelessWidget {
-  const FaciPointPrinterDemo({Key? key}) : super(key: key);
+  const FaciPointPrinterDemo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class FaciPointPrinterDemo extends StatelessWidget {
 }
 
 class DemoScreen extends StatefulWidget {
-  const DemoScreen({Key? key}) : super(key: key);
+  const DemoScreen({super.key});
 
   @override
   State<DemoScreen> createState() => _DemoScreenState();
@@ -56,7 +56,7 @@ class _DemoScreenState extends State<DemoScreen> {
       body: Center(
         child: ListView(
           shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 28),
           children: [
             /*ElevatedButton(
               onPressed: !_isBound ? null : () => printVersion(),
@@ -81,7 +81,8 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printVersion() async {
-    final version = await FaciPointSunmiPrinter.getPrinterVersion() ?? 'Unknown';
+    final version =
+        await FaciPointSunmiPrinter.getPrinterVersion() ?? 'Unknown';
     showMessage('Running on: $version');
   }
 
@@ -91,7 +92,7 @@ class _DemoScreenState extends State<DemoScreen> {
     // Logo header
     await FaciPointSunmiPrinter.setAlignment(SunmiPrintAlign.center);
     var bytes =
-    await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
+        await _getImageFromAsset('assets/images/facipoint_logo_receipt.bmp');
     await FaciPointSunmiPrinter.printBitmap(bytes, 1);
 
     await FaciPointSunmiPrinter.lineWrap(lines: 2);
@@ -234,15 +235,15 @@ class _DemoScreenState extends State<DemoScreen> {
 
   int getTitleLength(String text) {
     return (maxRowTitleLength < text.diacriticLength
-        ? maxRowTitleLength
-        : text.diacriticLength) +
+            ? maxRowTitleLength
+            : text.diacriticLength) +
         1;
   }
 
   int getValueLength(String text) {
     return (maxRowTitleLength < text.diacriticLength
-        ? maxRowTitleLength
-        : text.diacriticLength) +
+            ? maxRowTitleLength
+            : text.diacriticLength) +
         1;
   }
 
@@ -255,12 +256,19 @@ class _DemoScreenState extends State<DemoScreen> {
     try {
       apS = AppPrinterService();
       debugPrint('[FaciPointPrinterDemo] Initializing printer');
-      apS.initPrinterService().then((_) {
-        setState(() => _isBound = true);
+      apS.initPrinterService().then((_) async {
         debugPrint('[FaciPointPrinterDemo] Printer initialized');
         showMessage('[FaciPointPrinterDemo] Printer initialized');
+
+        bool hasPrinter = await apS.hasPrinter();
+        if (hasPrinter) {
+          setState(() => _isBound = true);
+        } else {
+          debugPrint('[FaciPointPrinterDemo] Device has no printer');
+          showMessage('[FaciPointPrinterDemo] Device has no printer');
+        }
       });
-    } catch(e, stackTrace) {
+    } catch (e, stackTrace) {
       print("ERROR INITIALIZING");
       print(e);
       print(stackTrace);

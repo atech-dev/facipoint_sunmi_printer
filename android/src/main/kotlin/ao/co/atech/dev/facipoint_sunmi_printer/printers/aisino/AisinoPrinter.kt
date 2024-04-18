@@ -2,15 +2,7 @@ package ao.co.atech.dev.facipoint_sunmi_printer.printers.aisino
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PathEffect
-import android.graphics.Rect
-import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
 import com.vanstone.appsdk.client.ISdkStatue
 import com.vanstone.l2.Common
@@ -62,7 +54,7 @@ class AisinoPrinter(override val context: Context) : PrinterInterface {
     }
 
     override fun hasPrinter() {
-        printer.result.success(false)
+        printer.hasPrinter()
     }
 
     override fun printText(text: String) {
