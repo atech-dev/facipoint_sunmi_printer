@@ -317,8 +317,11 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
     private fun initPrinter() {
         // Init configured printers
         val brand = (Build.BRAND).lowercase()
+        print("brand: $brand");
+        print("sunmi: ${EPrinterTypes.Sunmi.value}");
+        print("aisino: ${EPrinterTypes.Aisino.value}");
         when (brand) {
-            EPrinterTypes.Sunmi.name -> {
+            EPrinterTypes.Sunmi.value -> {
                 // Instantiate sunmi printer
                 sunmiPrinter = SunmiPrinter(context)
                 // Trying to init sunmi printer
@@ -331,7 +334,7 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
                 }
             }
 
-            EPrinterTypes.Aisino.name -> {
+            EPrinterTypes.Aisino.value -> {
                 // Instantiate aisino printer
                 aisinoPrinter = AisinoPrinter(context)
                 // Trying to init aisino printer

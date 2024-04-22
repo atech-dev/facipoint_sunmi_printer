@@ -6,7 +6,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class NoPrinter : PrinterInterface {
 
-    override var context: Context = TODO("Not implemented")
+    override lateinit var context: Context
         set
     override lateinit var result: MethodChannel.Result
         set
@@ -14,7 +14,7 @@ class NoPrinter : PrinterInterface {
     override val printerTag: String get() = "NoPrinter"
 
     private fun result() {
-        result.error("[NoPrinter] NotImplemented", "NotImplemented", null)
+        result.notImplemented()
     }
 
     override fun mainInitPrinterService() {
@@ -34,7 +34,7 @@ class NoPrinter : PrinterInterface {
 
     override fun hasPrinter() {
         super.hasPrinter()
-        result()
+        result.success(false)
     }
 
     override fun printText(text: String) {
