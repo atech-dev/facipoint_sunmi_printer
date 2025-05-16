@@ -90,6 +90,7 @@ class AppPrinterService {
       var init = await FaciPointSunmiPrinter.initializePrinter();
       await FaciPointSunmiPrinter.showPrinterStatus();
       var has = await FaciPointSunmiPrinter.hasPrinter();
+      print("init: $init");
       print("has: $has");
       if (init) {
         isInitialized = true;
