@@ -73,6 +73,8 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
         initPrinter()
 
         channel?.setMethodCallHandler(this)
+
+        println("onAttachedToEngine")
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -312,14 +314,15 @@ class FaciPointSunmiPrinterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel?.setMethodCallHandler(null)
+        println("onDetachedFromEngine")
     }
 
     private fun initPrinter() {
         // Init configured printers
         val brand = (Build.BRAND).lowercase()
-        print("brand: $brand");
-        print("sunmi: ${EPrinterTypes.Sunmi.value}");
-        print("aisino: ${EPrinterTypes.Aisino.value}");
+        println("brand: $brand");
+        println("sunmi: ${EPrinterTypes.Sunmi.value}");
+        println("aisino: ${EPrinterTypes.Aisino.value}");
         when (brand) {
             EPrinterTypes.Sunmi.value -> {
                 // Instantiate sunmi printer
