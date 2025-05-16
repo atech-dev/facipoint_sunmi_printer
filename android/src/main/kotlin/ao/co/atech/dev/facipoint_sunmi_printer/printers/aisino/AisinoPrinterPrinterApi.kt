@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import ao.co.atech.dev.facipoint_sunmi_printer.R
 import ao.co.atech.dev.facipoint_sunmi_printer.printers.PrinterInterface
 import com.vanstone.trans.api.PrinterApi
+import com.vanstone.trans.api.SystemApi
 import io.flutter.plugin.common.MethodChannel
 
 class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface {
@@ -22,15 +23,37 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
         set
 
     override fun hasPrinter() {
-        val status = PrinterApi.PrnStatus_Api()
-        // Status
-        // 136 - Success, has paper and is ready to print
-        // 2 - No paper
-        // 3 - Printer is overheated
-        println("[$printerTag] status: $status")
-        if(status == 2 || status == 3 || status == 136) {
-            result.success(true)
-        } else {
+        // result.success(true)
+        try {
+            var maybeCanPrint = false
+            /*val status = PrinterApi.PrnStatus_Api()
+            // Status
+            // 136 - Success, has paper and is ready to print
+            // 2 - No paper
+            // 3 - Printer is overheated
+            println("[$printerTag] status: $status")
+            if (status == 2 || status == 3 || status == 136) {
+                result.success(true)
+            } else {
+                result.success(false)
+            }*/
+            if (SystemApi.getMachineType_Api() == "A80") {
+                if (PrinterApi.printQueryStatus_Api() == 1) {
+                    maybeCanPrint = true
+                } else {
+                    maybeCanPrint = false
+                }
+            }else if(SystemApi.getMachineType_Api() == "A99 LITE"){
+                maybeCanPrint = false
+            } else {
+                maybeCanPrint = true
+            }
+
+            result.success(maybeCanPrint)
+        } catch (e: Exception) {
+            // Log the exception or handle it accordingly
+            println("[$printerTag] Error: ${e.message}")
+            // result.error("PRINTER_ERROR", "An error occurred while checking the printer status", e.message)
             result.success(false)
         }
     }
@@ -38,7 +61,7 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
     override fun printText(text: String) {
         PrinterApi.PrnLineSpaceSet_Api(4.toShort(), 0x00)
         PrinterApi.PrnStr_Api(text)
-        PrinterApi.PrnFontSet_Api(24, 24, 0)
+        PrinterApi.PrnFontSet_Api(24, 24, 0) // Add font PrinterApi.PrnFontSet_Api(context.assets,"gomono.ttf")
     }
 
     override fun setBold(enable: Boolean) {
@@ -74,9 +97,9 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
 
     override fun printRow(texts: Array<String>, width: IntArray, align: IntArray) {
         // TODO: Check this better
-        if(texts.count() == 2) {
+        if (texts.count() == 2) {
             this.printText(getText2(texts.first(), texts.last()))
-        } else if(texts.count() > 2) {
+        } else if (texts.count() > 2) {
             this.printText(getText3(texts, width, align))
         } else {
             this.printText(texts.joinToString(", "))
@@ -140,15 +163,15 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
                 }
             }
             Log.i("PrinterUtil - printData", msg);
-            Toast.makeText(context,msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             result.success(false)
             return -1
         }
     }
 
-    private fun getText2(leftText: String, rightText: String) : String {
+    private fun getText2(leftText: String, rightText: String): String {
         val builder = StringBuffer(leftText)
-        for (i in 0 until getSpaceCount(leftText, rightText)){
+        for (i in 0 until getSpaceCount(leftText, rightText)) {
             builder.append(" ")
         }
 
@@ -156,10 +179,10 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
         return builder.toString()
     }
 
-    private fun getText3(texts: Array<String>, width: IntArray, align: IntArray) : String {
+    private fun getText3(texts: Array<String>, width: IntArray, align: IntArray): String {
         /// TODO: Check if the *width* array has an i value for the i in *texts* array
         /// TODO: Check if the *align* array has an i value for the i in *texts* array
-        if((texts.size != width.size || texts.size != align.size) && texts.isNotEmpty()) {
+        if ((texts.size != width.size || texts.size != align.size) && texts.isNotEmpty()) {
             return texts.first()
         }
 
@@ -174,12 +197,12 @@ class AisinoPrinterPrinterApi(override val context: Context) : PrinterInterface 
             // because for SUNMI the total sum of space is 31, for aisino is 32
             if (i == 0) spaceCount++
 
-            if(align[i] == 1) { // ALIGN CENTER
+            if (align[i] == 1) { // ALIGN CENTER
                 val slicedSpace: Int = kotlin.math.ceil((spaceCount / 2).toDouble()).toInt()
                 setSpace(builder, slicedSpace)
                 builder.append(text)
                 setSpace(builder, slicedSpace)
-            } else if(align[i] == 2) { // ALIGN RIGHT
+            } else if (align[i] == 2) { // ALIGN RIGHT
                 setSpace(builder, spaceCount)
                 builder.append(text)
             } else { // ALIGN LEFT
