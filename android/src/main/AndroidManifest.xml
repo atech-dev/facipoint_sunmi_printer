@@ -1,8 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="ao.co.atech.dev.facipoint_sunmi_printer">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ao.co.atech.dev.facipoint_sunmi_printer">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <!-- To support printerlibrary on Android R -->
     <queries>
         <package android:name="woyou.aidlservice.jiuiv5"/>
+    </queries>
+
+    <!--    解決Android 12初始化SDK失敗问题-->
+    <queries>
+        <package android:name="com.vanstone.appsdk.api"/>
     </queries>
 </manifest>
