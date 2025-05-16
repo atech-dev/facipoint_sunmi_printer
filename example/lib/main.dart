@@ -1,15 +1,18 @@
 import 'dart:typed_data';
 
 import 'package:facipoint_sunmi_printer_example/AppPrinterService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:facipoint_sunmi_printer/facipoint_sunmi_printer.dart';
 import 'package:flutter/services.dart';
 
+AppPrinterService? apS;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AppPrinterService().initPrinterService();
+  apS = await AppPrinterService().initPrinterService();
 
   runApp(const FaciPointPrinterDemo());
 }
@@ -38,8 +41,6 @@ class _DemoScreenState extends State<DemoScreen> {
   int maxRowTitleLength = 23;
 
   bool _isBound = false;
-
-  late AppPrinterService apS;
 
   @override
   void initState() {
@@ -73,6 +74,13 @@ class _DemoScreenState extends State<DemoScreen> {
             ElevatedButton(
               onPressed: !_isBound ? null : () => printFPSampleReceipt3(),
               child: const Text('Print Facipoint Sample Receipt Model 3'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (_) => const TestView()));
+              },
+              child: const Text('NEW PAGE'),
             ),
           ],
         ),
@@ -151,10 +159,10 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printFPSampleReceipt2() async {
-    apS.transactionTitle = "";
-    apS.transactionDescription = "Recibo de Fecho de Conta";
+    apS?.transactionTitle = "";
+    apS?.transactionDescription = "Recibo de Fecho de Conta";
 
-    await apS.printReceipt(sections: [
+    await apS?.printReceipt(sections: [
       PrinterContentSection3(
         [
           PrinterContentRow3("AOA", "QTD", "TOTAL"),
@@ -196,10 +204,10 @@ class _DemoScreenState extends State<DemoScreen> {
   }
 
   Future<void> printFPSampleReceipt3() async {
-    apS.transactionTitle = "Pagamento ao Estado";
-    apS.transactionDescription = "Adesão Cartão de Ambulante";
+    apS?.transactionTitle = "Pagamento ao Estado";
+    apS?.transactionDescription = "Adesão Cartão de Ambulante";
 
-    await apS.printReceipt(sections: [
+    await apS?.printReceipt(sections: [
       PrinterContentSection2([
         PrinterContentRow2("Cód. Nota", "8086465675"),
         PrinterContentRow2("RUPE", "2314252637485913242312"),
@@ -252,15 +260,18 @@ class _DemoScreenState extends State<DemoScreen> {
   void showMessage(String text) =>
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
 
-  void _initPrinterService() {
+  void _initPrinterService() async {
+
+    var hasPrinter = await apS?.hasPrinter();
+    print("hasPrinter: $hasPrinter");
     try {
       apS = AppPrinterService();
       debugPrint('[FaciPointPrinterDemo] Initializing printer');
-      apS.initPrinterService().then((_) async {
+      apS?.initPrinterService().then((init) async {
         debugPrint('[FaciPointPrinterDemo] Printer initialized');
-        showMessage('[FaciPointPrinterDemo] Printer initialized');
+        showMessage('[FaciPointPrinterDemo] Printer initialized: $init');
 
-        bool hasPrinter = await apS.hasPrinter();
+        bool hasPrinter = (await apS?.hasPrinter()) ?? false;
         if (hasPrinter) {
           setState(() => _isBound = true);
         } else {
@@ -273,6 +284,35 @@ class _DemoScreenState extends State<DemoScreen> {
       print(e);
       print(stackTrace);
     }
+  }
+}
+
+class TestView extends StatelessWidget {
+  const TestView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Voltar"),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            TextFormField(),
+            const SizedBox(height: 60),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (_) => const TestView()));
+              },
+              child: const Text('NEW PAGE'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
